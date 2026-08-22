@@ -25,6 +25,8 @@ def postgres_engine():
     print(f"Connecting to host: {db_host}, database: {db_name}")
     return create_engine(url)
 
+#add code here to pull from 'rounds' database and update the api call to be based on Round ID instead of Season ID
+
 ##sportmonks api
 
 #variables
