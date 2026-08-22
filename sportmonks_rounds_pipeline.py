@@ -22,7 +22,7 @@ def postgresql_engine():
     url = f"postgresql+psycopg2://{db_user}:{db_pw}@{db_host}:{db_port}/{db_name}"
     return create_engine(url)
 
-def api_call(endpoint = endpoint, season_ids = season_ids):
+def api_call(endpoint, season_ids):
 
     def fetch_endpoint(endpoint, season_id):
         response = requests.get(f"{endpoint}{season_id}?api_token={api_token}", timeout=30)
@@ -30,7 +30,7 @@ def api_call(endpoint = endpoint, season_ids = season_ids):
         return pd.json_normalize(payload["data"])
 
     return{
-        (endpoint, season_name): fetch_endpoint(endpoint, season_id)
+        ('rounds', season_name): fetch_endpoint(endpoint, season_id)
         for season_name, season_id in season_ids.items()
     }
 
