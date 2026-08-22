@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parent.with_name('db_file.env'))
+load_dotenv(Path(__file__).with_name('db_file.env'))
 db_user = os.getenv('DB_USER')
 db_pw = os.getenv('DB_PASSWORD')
 db_host = os.getenv('DB_HOST')
