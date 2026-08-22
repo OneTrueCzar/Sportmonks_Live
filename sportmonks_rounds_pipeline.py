@@ -31,7 +31,6 @@ def api_call(endpoint = endpoint, season_ids = season_ids):
 
     return{
         (endpoint, season_name): fetch_endpoint(endpoint, season_id)
-        for endpoint in endpoint
         for season_name, season_id in season_ids.items()
     }
 
