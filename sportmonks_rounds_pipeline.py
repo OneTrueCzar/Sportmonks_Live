@@ -34,8 +34,8 @@ def api_call(endpoint, season_ids):
         for season_name, season_id in season_ids.items()
     }
 
-def upload_df(df, engine, table_name):
-    df.to_sql(table_name, engine, index = False, if_exists = 'replace')
+def upload_df(df, engine, table_name, schema_name):
+    df.to_sql(table_name, schema_name, engine, index = False, if_exists = 'replace')
     print(f"Uploaded {len(df)} rows and {len(df.columns)} columns to {table_name}")
 
 def process_df(name, df):
@@ -47,4 +47,4 @@ if __name__ == '__main__':
     engine = postgresql_engine()
     for (name, season_name), df in dfs.items():
         processed_df = process_df(name, df)
-        upload_df(processed_df, engine, table_name = f"{name}_{season_name}")
+        upload_df(processed_df, engine, table_name = f"{name}_{season_name}", schema_name=f"{season_name}")
