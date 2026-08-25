@@ -19,12 +19,6 @@ payload = response.json()
 table = pd.json_normalize(payload['data'])
 table = table.rename(columns = {'id': 'standing_id'})
 details = pd.DataFrame(table['details'][0])
-#stats_type = pd.DataFrame.from_dict(stats['type'][0])
-#table_output = pd.merge(table, stats, on = 'standing_id')
-
-#I need the 'code' key value pair from the 'type' dictionary within 'details'
-
-#print(details['type'])
 
 type_dict = pd.DataFrame(
     [[details['type'][n].get('id'), details['type'][n].get('code')] 
@@ -36,3 +30,5 @@ details_raw = pd.merge(details, type_dict, on = 'type_id')
 details_final = details_raw[['standing_id', 'value', 'stat-column-names']]
 
 print(details_final)
+
+#Now I need to pivot_wider on `details_final`
