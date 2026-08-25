@@ -13,7 +13,6 @@ db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
 db_name = os.getenv('DB_NAME')
 api_token = os.getenv('API_TOKEN')
-api_token = os.getenv('API_TOKEN')
 
 endpoint = "https://api.sportmonks.com/v3/football/rounds/seasons/"
 season_ids = {'epl25_26':28083, 'laliga25_26':27965, 'bundesliga25_26':28321, 'serieA25_26': 27895, 'ligueUn25_26':28082}
