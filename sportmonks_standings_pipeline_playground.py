@@ -28,9 +28,14 @@ type_dict = pd.DataFrame(
 
 details_raw = pd.merge(details, type_dict, on = 'type_id')
 details_final = details_raw[['standing_id', 'value', 'stat-column-names']]
-
-#print(details_final)
-
 details_pivot = details_final.pivot(index = 'standing_id', columns = 'stat-column-names', values = 'value')
 details_pivot = details_pivot.reset_index()
-print(details_pivot)
+
+#I need a function that creates dataframes for each row of 'details'
+
+def table_stats(details):
+    return [pd.DataFrame(row_details) for row_details in details]
+
+details_dfs = table_stats(table["details"])
+
+print(details_dfs[0])
