@@ -29,6 +29,9 @@ type_dict = pd.DataFrame(
 details_raw = pd.merge(details, type_dict, on = 'type_id')
 details_final = details_raw[['standing_id', 'value', 'stat-column-names']]
 
-print(details_final)
+#print(details_final)
 
 #Now I need to pivot_wider on `details_final`
+
+details_pivot = details_final.pivot(index = 'standings_id', columns = 'stat-column-names', values = 'value')
+print(details_pivot)
