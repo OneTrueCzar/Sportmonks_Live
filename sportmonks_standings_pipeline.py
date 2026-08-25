@@ -18,6 +18,7 @@ season_ids = {'epl25_26':28083, 'laliga25_26':27965, 'bundesliga25_26':28321, 's
 
 def postgresql_engine():
     url = f"postgresql+psycopg2://{db_user}:{db_pw}@{db_host}:{db_port}/{db_name}"
+    print(f'Connecting to host: {db_host}, database: {db_name}')
     return create_engine(url)
 
 def api_call(season_ids):
