@@ -33,9 +33,6 @@ details_pivot = details_pivot.reset_index()
 
 #I need a function that creates dataframes for each row of 'details'
 
-def table_stats(details):
-    return [pd.DataFrame(row_details) for row_details in details]
+details_dfs = [pd.DataFrame(row_details) for row_details in table['details']]
 
-details_dfs = table_stats(table["details"])
-
-print(details_dfs[0])
+print(details_dfs)
