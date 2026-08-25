@@ -34,4 +34,6 @@ details_final = details_raw[['standing_id', 'value', 'stat-column-names']]
 #Have to get rid of the multi-index next where first column is the 'standing_id' and the rest are the stat values
 
 details_pivot = details_final.pivot(index = 'standing_id', columns = 'stat-column-names', values = 'value')
-print(details_pivot.index)
+details_pivot_index = details_pivot.copy()
+details_pivot_index = details_pivot_index.reset_index()
+print(details_pivot_index)
