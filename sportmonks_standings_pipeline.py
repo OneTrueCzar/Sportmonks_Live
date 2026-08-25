@@ -49,4 +49,17 @@ def api_call(endpoint = endpoint, season_ids = season_ids):
         for season_name, season_id in season_ids.items()
     }
 
+def upload_df(df, engine, table_name):
+    df.to_sql(table_name, engine, index = False, if_exists = 'replace')
+    print(f"Uploaded {len(df)} rows and {len(df.columns)} to {table_name}")
 
+def process_df(name, df):
+    df = df.copy()
+    return df
+
+if __name__ == '__main__':
+    dfs = api_call(endpoint, season_ids)
+    engine = postgres_engine
+    for (name, season_name), df in dfs.items():
+        processed_df = process_df(name, df)
+        upload_df(processed_df, engine, table_name = f'{table_name}_{season_name}')
