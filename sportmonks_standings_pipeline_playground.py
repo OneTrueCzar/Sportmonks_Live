@@ -31,7 +31,7 @@ details_final = details_raw[['standing_id', 'value', 'stat-column-names']]
 
 #print(details_final)
 
-#Now I need to pivot_wider on `details_final`
+#Have to get rid of the multi-index next where first column is the 'standing_id' and the rest are the stat values
 
-details_pivot = details_final.pivot(index = 'standings_id', columns = 'stat-column-names', values = 'value')
-print(details_pivot)
+details_pivot = details_final.pivot(index = 'standing_id', columns = 'stat-column-names', values = 'value')
+print(details_pivot.index)
