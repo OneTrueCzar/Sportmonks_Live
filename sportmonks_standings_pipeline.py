@@ -24,12 +24,12 @@ def postgresql_engine():
 def api_call(season_ids):
 
     def fetch_endpoint(season_id):
-        response = requests.get(f"https://api.sportmonks.com/v3/football/standings/seasons/{season_id}?api_token={api_token}&include=participant", timeout=30)
+        response = requests.get(f"https://api.sportmonks.com/v3/football/standings/seasons/{season_id}?api_token={api_token}&include=participant;details.type", timeout=30)
         payload = response.json()
         return pd.json_normalize(payload["data"])
 
     return{
-        ('standings', season_name): fetch_endpoint(season_id)
+        ('standings', season_name): fetch_endpoint(season_id) 
         for season_name, season_id in season_ids.items()
     }
 
