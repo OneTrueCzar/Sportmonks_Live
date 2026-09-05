@@ -31,8 +31,14 @@ details_final = details_raw[['standing_id', 'value', 'stat-column-names']]
 details_pivot = details_final.pivot(index = 'standing_id', columns = 'stat-column-names', values = 'value')
 details_pivot = details_pivot.reset_index()
 
-#I need a function that creates dataframes for each row of 'details'
+details_dfs = [pd.DataFrame(rows) for rows in table['details']]
+type_dicts = [details_dfs[n]['type'] for n in range(len(details_dfs))]
+type_dicts = [
+    pd.DataFrame(
+        [[detail_type.get('id'), detail_type.get('code')] for detail_type in details_df['type']],
+        columns=['type_id', 'stat-column-names']
+    )
+    for details_df in details_dfs
+]
 
-details_dfs = [pd.DataFrame(row_details) for row_details in table['details']]
-
-print(details_dfs)
+print(type_dicts)
