@@ -31,21 +31,19 @@ def api_call(season_ids):
             .rename(columns={"id": "standings_id"})
             .drop(columns="details", errors="ignore")
         )
-        detail_rows = []
-        for standing in payload["data"]:
-            standings_id = standing.get("id", standing.get("standing_id"))
-            for detail in standing.get("details") or []:
-                detail_row = detail.copy()
-                detail_type = detail_row.pop("type", {}) or {}
-                if isinstance(detail_type, dict):
-                    detail_row["type_id"] = detail_type.get("id", detail_row.get("type_id"))
-                    detail_row["type_code"] = detail_type.get("code", detail_row.get("type_code"))
-                detail_row["standings_id"] = standings_id
-                detail_rows.append(detail_row)
-
-        details = pd.json_normalize(detail_rows)[
-            ["standings_id", "value", "type_code"]
-        ]
+        details = pd.json_normalize(
+            payload["data"],
+            record_path="details",
+            meta=["id"],
+            meta_prefix="parent_",
+            errors="ignore",
+        ).rename(
+            columns={
+                "type.code": "type_code",
+                "parent_id": "standings_id",
+            }
+        )
+        details = details[["standings_id", "value", "type_code"]]
 
         if not details.empty:
             details = (
