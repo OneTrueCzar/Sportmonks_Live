@@ -18,6 +18,7 @@ response = requests.get(f"https://api.sportmonks.com/v3/football/standings/seaso
 payload = response.json()
 table = pd.json_normalize(payload['data'])
 details_test = pd.json_normalize(payload['data'], record_path=['details'])
+details_test_pivot = details_test.pivot(index = 'standing_id')
 table = table.rename(columns = {'id': 'standing_id'})
 details = pd.DataFrame(table['details'][0])
 
@@ -42,4 +43,4 @@ type_dicts = [
     for details_df in details_dfs
 ]
 
-print(details_test)
+print(details_test_pivot)
