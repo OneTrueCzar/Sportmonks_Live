@@ -46,8 +46,8 @@ def api_call(season_ids):
         )
         details = (
             pd.json_normalize(
-                payload['statistics'],
-                record_path='details',
+                payload['data'],
+                record_path=['statistics', 'details'],
                 meta=['team_statistics_id'],
                 errors = 'ignore'
             )
