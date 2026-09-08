@@ -49,12 +49,11 @@ def api_call(season_ids):
                 payload['data'],
                 record_path=['statistics', 'details'],
                 meta=['team_statistics_id'],
-                errors = 'ignore'
+                errors = 'ignore',
+                max_level=1
             )
             .rename(columns={'type.code': 'type_code'})
         )
-
-        details = details[['team_statistics_id', 'value', 'type_code']]
 
         details = (
             details.pivot_table(
