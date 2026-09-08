@@ -28,9 +28,9 @@ details = (
     .rename(columns={'type.code': 'type_code'})
         )
 
-details_values = details.filter(regex='^value.').columns
-details_test = details.pivot_table(index = 'team_id', columns = 'type_code', values = details_values)
+details_values = list(details.filter(regex='^value.').columns)
+details_pivot = details.pivot_table(index = 'team_id', columns = 'type_code', values = details_values, aggfunc = 'first')
 
-print(details_values)
+print(details_pivot.columns)
 
 
