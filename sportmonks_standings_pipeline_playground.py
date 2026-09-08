@@ -21,35 +21,47 @@ details = pd.json_normalize(
     payload['data'],
     record_path='details',
     meta=['id'],
-    meta_prefix='standing_',
+    meta_prefix='parent_',
     sep='_'
 )
 
-details = details.rename(columns={
-    'standing_id': 'standing_id',
-    'type_id': 'type_id',
-    'type_code': 'stat_column_name'
-})
+#print(details)
 
-print(details)
+expanded = table.explode('details', ignore_index=True)
 
-"""type_dict = pd.DataFrame(
-    [[details['type'][n].get('id'), details['type'][n].get('code')] 
-    for n in range(len(details['type']))],
-    columns=['type_id', 'stat-column-names']
+detail_columns = pd.json_normalize(expanded.pop('details'))
+
+details_long = pd.concat(
+    [
+        expanded[['id']].rename(columns={'id': 'standing_id'}),
+        detail_columns
+    ],
+    axis=1
+)
+
+details_wide = (
+    details_long
+    .pivot_table(
+        index='standing_id',
+        columns='type_code',
+        values='value',
+        aggfunc='first'
     )
+    .reset_index()
+)
 
-details_raw = pd.merge(details, type_dict, on = 'type_id')
-details_final = details_raw[['standing_id', 'value', 'stat-column-names']]
-details_pivot = details_final.pivot(index = 'standing_id', columns = 'stat-column-names', values = 'value')
-details_pivot = details_pivot.reset_index()
+details_wide.columns.name = None
 
-details_dfs = [pd.DataFrame(rows) for rows in table['details']]
-type_dicts = [details_dfs[n]['type'] for n in range(len(details_dfs))]
-type_dicts = [
-    pd.DataFrame(
-        [[detail_type.get('id'), detail_type.get('code')] for detail_type in details_df['type']],
-        columns=['type_id', 'stat-column-names']
-    )
-    for details_df in details_dfs
-]"""
+parent_table = (
+    table
+    .drop(columns='details')
+    .rename(columns={'id': 'standing_id'})
+)
+
+table_with_details = parent_table.merge(
+    details_wide,
+    on='standing_id',
+    how='left'
+)
+
+print(table_with_details)
