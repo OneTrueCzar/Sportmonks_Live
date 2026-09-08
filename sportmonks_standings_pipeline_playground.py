@@ -16,8 +16,8 @@ api_token = os.getenv('API_TOKEN')
 
 response = requests.get(f"https://api.sportmonks.com/v3/football/standings/seasons/28083?api_token={api_token}&include=participant;details.type", timeout=30)
 payload = response.json()
-table = pd.json_normalize(payload['data'])
-details_test = pd.json_normalize(payload['data'], record_path=['details'])
+table = pd.json_normalize(payload['data'], max_level=1)
+"""details_test = pd.json_normalize(payload['data'], record_path=['details'])
 details_test_pivot = details_test.pivot(index = 'standing_id')
 table = table.rename(columns = {'id': 'standing_id'})
 details = pd.DataFrame(table['details'][0])
@@ -41,6 +41,6 @@ type_dicts = [
         columns=['type_id', 'stat-column-names']
     )
     for details_df in details_dfs
-]
+]"""
 
-print(details_test_pivot)
+print(table['details'])
