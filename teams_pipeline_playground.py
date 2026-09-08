@@ -22,10 +22,15 @@ details = (
         record_path=['statistics', 'details'],
         meta=['id'],
         meta_prefix='team_',
-        errors='ignore'
+        errors='ignore',
+        max_level=2
     )
     .rename(columns={'type.code': 'type_code'})
         )
 
-print(details.columns)
+details_test = details.pivot_table(index = 'team_id', columns = 'type_code', aggfunc='first')
+details_reset = details_test.reset_index(drop = True)
+
+print(details_reset.columns)
+
 
