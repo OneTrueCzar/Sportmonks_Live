@@ -1,8 +1,6 @@
 import pandas as pd
 import requests
-from functools import cache
 from pathlib import Path
-from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
 
