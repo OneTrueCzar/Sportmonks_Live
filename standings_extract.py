@@ -23,4 +23,4 @@ def api_call(season_ids):
         for season_name, season_id in season_ids.items()
     }
 
-print(api_call(season_ids))
+extract_step = api_call(season_ids)
