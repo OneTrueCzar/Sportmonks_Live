@@ -17,7 +17,7 @@ def api_call(season_ids):
         return pd.json_normalize(payload['data'])
 
     return {
-        ('standings', season_name): fetch_endpoint(season_id)
+        (f'standings_{season_name}'): fetch_endpoint(season_id)
         for season_name, season_id in season_ids.items()
     }
 
