@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).with_name('db_file.env'))
 api_token = os.getenv('API_TOKEN')
 
-season_ids = {'epl25_26':28083, 'laliga25_26':27965, 'bundesliga25_26':28321, 'serieA25_26': 27895, 'ligueUn25_26':28082}
+season_ids = {'epl26_27':28083, 'laliga26_27':27965, 'bundesliga26_27':28321, 'serieA26_27': 27895, 'ligueUn26_27':28082}
 
 def api_call(season_ids):
 
