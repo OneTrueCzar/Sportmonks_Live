@@ -28,5 +28,12 @@ def flatten_details(df):
 	return standings.merge(detail_columns, on="id", how="left")
 
 
-main_df = flatten_details(extract_step["standings_bundesliga26_27"])
-print(main_df)
+def transform_all(extract_step):
+	return {
+		name: flatten_details(df)
+		for name, df in extract_step.items()
+	}
+
+
+transformed_step = transform_all(extract_step)
+print(transformed_step)
