@@ -1,5 +1,5 @@
 .vscode/db_file.env
 db_file.env
 *.env
-*.pyc
-__pycache__
+*.py[cod]
+__pycache__/
